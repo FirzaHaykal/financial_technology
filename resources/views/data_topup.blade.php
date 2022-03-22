@@ -17,7 +17,7 @@ $page = "Data Transaksi";
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            Data Transaksi
+                            Data Topup
                         </div>
                         <div class="col d-flex justify-content-end">
                         </div>
@@ -91,14 +91,6 @@ $page = "Data Transaksi";
                                                       REJECTED
                                                     @endif
                                                     <table class="table table-bordered">
-                                                      <thead>
-                                                        <tr>
-                                                          <th>Nama Pesanan</th>
-                                                          <th>Jumlah</th>
-                                                          <th>Price</th>
-                                                          <th>Total</th>
-                                                        </tr>
-                                                      </thead>
                                                       <tbody>
                                                         <?php $total_Price = 0; ?>
                                                         @foreach ($details as $detail)
@@ -114,7 +106,6 @@ $page = "Data Transaksi";
                                                         @endforeach
                                                       </tbody>
                                                     </table>
-                                                    Total Price: {{ $total_Price }}
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -122,32 +113,6 @@ $page = "Data Transaksi";
                                             </div>
                                             </div>
                                         </div>
-
-                                        @if (Auth::user()->role_id === 1)
-                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-{{ $transaksi->id }}">
-                                            Hapus
-                                        </button>
-                                        
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="delete-{{ $transaksi->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Hapus Transaksi {{ $transaksi->name }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Apakah Anda yakin ingin menghapus user {{ $transaksi->name }}?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                                                    <a href="{{ route("data_transaksi.delete", ["id" => $transaksi->id]) }}" type="submit" class="btn btn-primary">Ya</a>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -156,7 +121,7 @@ $page = "Data Transaksi";
                 </div>
 
                 <div class="footer">
-                 @if(Auth::user()->role_id === 1)
+                 @if(Auth::user()->role_id === 2)
                   <button type="button" class="btn btn-outline-success" onclick="window.print()">
                     PRINT
                   </button>
