@@ -338,6 +338,7 @@ Route::prefix('data_transaksi')->group(function () {
         $transaksis = Transaksi::where('type', 2)
                         ->groupBy('invoice_id')
                         ->get();
+        
 
         return view("data_transaksi", [
             "transaksis" => $transaksis,
@@ -393,4 +394,69 @@ Route::prefix('data_transaksi')->group(function () {
 
         return redirect()->back()->with("status", "Berhasil Menghapus User & Saldo");
     })->name("data_transaksi.delete");
+});
+
+Route::prefix('data_topup')->group(function () {
+    Route::get("/", function(){
+        $details = Transaksi::where("type", 2)
+                        ->get();
+
+        $transaksis = Transaksi::where('type', 1)
+                        ->groupBy('invoice_id')
+                        ->get();
+
+        return view("data_topup", [
+            "transaksis" => $transaksis,
+            "details" => $details,
+        ]);
+    })->name("data_topup");
+
+    Route::post("/add", function(Request $request){
+        $user = User::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => Hash::make($request->password),
+            "role_id" => $request->role_id
+        ]);
+
+        if($user->role_id == 4){
+            Saldo::create([
+                "user_id" => $user->id,
+                "saldo" => 0
+            ]);
+        }
+
+        return redirect()->back()->with("status", "Berhasil Menambahkan User");
+    })->name("data_topup.add");
+
+    Route::put("/edit/{id}", function(Request $request, $id){
+        if($request->password == null){
+            User::find($id)->update([
+                "name" => $request->name,
+                "email" => $request->email,
+                "role_id" => $request->role_id
+            ]);
+
+            return redirect()->back()->with("status", "Berhasil Mengedit User");
+        }
+
+        User::find($id)->update([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => Hash::make($request->password),
+            "role_id" => $request->role_id
+        ]);
+
+        return redirect()->back()->with("status", "Berhasil Mengedit User");
+    })->name("data_topup.edit");
+
+    Route::get("/delete/{id}", function($id){
+        $user = User::find($id);
+
+        Saldo::where("user_id", $user->id)->delete();
+
+        $user->delete();
+
+        return redirect()->back()->with("status", "Berhasil Menghapus User & Saldo");
+    })->name("data_topup.delete");
 });

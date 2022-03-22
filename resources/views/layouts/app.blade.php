@@ -55,6 +55,17 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ $page == "Menu" ? "active" : "" }}" href="{{ route("menu") }}">Menu</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $page == "Riwayat Transaksi" ? "active" : "" }}" href="{{ route("data_transaksi") }}">Riwayat Transaksi</a>
+                            </li>
+                            @endif
+                            @if(Auth::user()->role_id === 2)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $page == "Home" ? "active" : "" }}" aria-current="page" href="{{ route("home") }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ $page == "Data Topup" ? "active" : "" }}" href="{{ route("data_topup") }}">Data Topup</a>
+                            </li>
                             @endif
                             @if(Auth::user()->role_id === 1)
                             <li class="nav-item">

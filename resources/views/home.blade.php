@@ -66,7 +66,6 @@ $page = "Home";
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
-                                    {{-- <th>Nominal</th> --}}
                                     <th>Invoice ID</th>
                                     <th>Status</th>
                                     <th>Detail</th>
